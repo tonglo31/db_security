@@ -1,0 +1,45 @@
+#products-details{
+	margin: 5% 0;
+}
+
+.info-title{
+	line-height: 1.5;
+}
+
+.dropdown-divider{
+	margin: 2% 0 2% 0;
+}
+
+.product-price{
+	margin:5% 0;
+}
+
+.payment-form{
+	padding: 5% 5%;
+}
+
+.spacing{
+	line-height: 1.5;
+}
+
+.payment-form .price{
+	color: #B12704 ;
+}
+
+.payment-form .buy-button{
+	margin: 3% 5% 0;
+}
+
+
+#similar-products{
+	margin: 7% 5%;
+	text-align: center;
+}
+
+#similar-products .products-col{
+	padding: 8%;
+}
+
+.qty{
+	margin: 0 3%;
+}

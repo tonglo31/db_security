@@ -1,0 +1,83 @@
+version: '3'
+services:
+  db:
+    image: percona
+    container_name: mysql
+    networks:
+      - lamp-docker
+    environment:
+      MYSQL_DATABASE: lamp_docker
+      MYSQL_USER: proj_docker
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      TZ: 'Asia/Hong_Kong'
+    command: mysqld --general-log=1 --general-log-file=/var/lib/mysql/general.log --log-timestamps=SYSTEM --slow-query-log=1 --slow-query-log-file=/var/lib/mysql/slow-query.log
+    volumes:
+      - "./db:/docker-entrypoint-initdb.d/"
+    ports:
+      - '3306:3306'
+    restart: always
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    environment:
+      GF_INSTALL_PLUGINS: percona-percona-app
+  mysqlexporter:
+    container_name: mysql_exporter
+    image: prom/mysqld-exporter
+    ports: 
+      - "9104:9104"
+    environment: 
+      - DATA_SOURCE_NAME=root:secret@(db)/lamp_docker
+    networks:
+      - lamp-docker
+    expose:
+      - 9104
+    depends_on:
+      - db
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/config:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    depends_on:
+      - mysqlexporter
+    networks:
+      - lamp-docker
+  php_apache:
+    build: .
+    image: php:8.1.12-apache
+    container_name: php
+    networks:
+      - lamp-docker
+    volumes:
+      - "./src:/var/www/html"
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - db
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    networks:
+      - lamp-docker
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    depends_on:
+      - db
+networks:
+  lamp-docker:
+    driver: bridge

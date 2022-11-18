@@ -1,0 +1,38 @@
+/*title section*/
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Noto+Sans+JP&display=swap');
+
+.title-container{
+	padding: 3% 0;
+	text-align: center;
+}
+
+.title{
+	line-height: 1.5;
+	font-family: 'Balsamiq Sans', cursive;
+}
+
+.divider-container hr{
+	  border-top: 3px solid ;
+}
+
+.table{
+	display: block;
+	overflow-x: auto;
+	text-align: center;
+	width: 100%
+
+}
+
+.table th{
+
+	font-size: 1.45rem;
+		font-family: 'Balsamiq Sans', cursive;
+}
+
+.order-form{
+	text-align: center;
+}
+
+.order-box{
+	margin: 10% 0 ;
+}

@@ -1,0 +1,53 @@
+/*Navbar*/
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno&display=swap');
+
+.navbar{
+	font-size: 1.25rem;
+	background: #393e46;
+	font-family: 'MuseoModerno', cursive;
+}
+
+.navbar-cart{
+	margin-right: 8px;
+}
+
+.logout{
+	color: #e2979c;
+}
+
+.logout:hover{
+	color: red;
+}
+
+/*Profile */
+.profile-title{
+	margin-top: 3%;
+	text-align: center;
+	font-size: 2.35rem;
+}
+
+.profile-form{
+	width: 35%;
+	margin: 0 auto;
+}
+
+@media only screen and (max-width: 1000px){
+	.profile-form{
+		width: 70%;
+	}
+}
+
+.profile-edit{
+	margin-bottom: 2%;
+}
+
+.profile-btn{
+	display: block;
+	margin: 0 auto;
+}
+
+/*Delete Account	*/
+.delete-account{
+	margin-top: 3rem;
+	text-align: center;
+}

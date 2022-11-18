@@ -1,0 +1,13 @@
+{
+    "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/nftstorage/php-client.git"
+    }
+  ],
+    "require": {
+        "sonata-project/google-authenticator": "^2.3",
+        "phpmailer/phpmailer": "^6.6",
+        "nftstorage/php-client": "*@dev"
+    }
+}

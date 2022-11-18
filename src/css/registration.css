@@ -1,0 +1,22 @@
+.form-group {
+    padding: 0.5rem;
+}   
+
+.form-width {
+    border: solid #f8f9fa;
+    box-shadow: 4px;
+    max-width: 450px;
+    margin: 5rem auto;
+    padding: 2rem;  
+}
+
+.button-group {
+    margin: 0 auto;
+}
+.register-btn {
+    padding: 0.25rem;
+}
+
+#register-title{
+    text-align: center;
+}
