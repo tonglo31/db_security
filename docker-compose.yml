@@ -13,26 +13,65 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
       TZ: 'Asia/Hong_Kong'
-    # command: mysqld --user=root 
     volumes:
       - "./db:/docker-entrypoint-initdb.d/"
       - "./mysql/config/my.cnf:/etc/my.cnf"
+      - ./mysql_log:/var/log/mysql
     ports:
       - '3306:3306'
     restart: always
-  elasticsearch:
+  es:
     image: elasticsearch:7.14.2
     container_name: elasticsearch
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
-      - discovery.type=single-node  
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
+    networks:
+      - lamp-docker
   kibana:
     image: kibana:7.14.2
     container_name: kibana
     ports:
       - "5601:5601"
+    depends_on:
+      - es
+    healthcheck:
+      test: ["CMD", "curl", "-f", "kibana:5601"]
+      interval: 50s
+      timeout: 50s
+      retries: 5
+    networks:
+      - lamp-docker
+  filebeat:
+    user: root
+    container_name: filebeat
+    image: docker.elastic.co/beats/filebeat:7.14.2
+    command: ["-strict.perms=false"]
+    restart: on-failure
+    volumes:
+      # - filebeat:/usr/share/filebeat
+      - /var/run/docker.sock:/host_docker/docker.sock
+      - /var/lib/docker:/host_docker/var/lib/docker
+      # - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
+      - ./mysql_log:/var/log/mysql
+      - "./filebeat_conf/filebeat.yml:/usr/share/filebeat/filebeat.yml"
+      - "./filebeat_conf/mysql.yml:/usr/share/filebeat/modules.d/mysql.yml"
+    environment:
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
+      - KIBANA_HOST=${KIBANA_HOST:-node1}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
+     # disable strict permission checks
+    depends_on:
+      kibana:
+        condition: service_healthy
+    networks:
+      - lamp-docker
+    build:
+      context: .
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -72,7 +111,7 @@ services:
     networks:
       - lamp-docker
   php_apache:
-    build: .
+    build: . 
     image: php:8.1.12-apache
     container_name: php
     networks:
@@ -97,8 +136,11 @@ services:
       - PMA_PORT=3306
     depends_on:
       - db
-volumes:
-  elastic_data: {}
 networks:
   lamp-docker:
     driver: bridge
+# configs:
+#   fb_config:
+#     file: ./filebeat_conf/filebeat.yml
+# volumes:
+#   filebeat:
