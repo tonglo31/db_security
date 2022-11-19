@@ -1,8 +1,7 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+08:00";
-
 INSTALL PLUGIN audit_log SONAME 'audit_log.so';
+START TRANSACTION;
 
 --
 -- Database: `security_project`
@@ -11,7 +10,7 @@ INSTALL PLUGIN audit_log SONAME 'audit_log.so';
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artwork`
+-- Table structure for table `artworkG`
 --
 
 CREATE TABLE `artwork` (
@@ -212,20 +211,4 @@ ALTER TABLE `user`
 --
 ALTER TABLE `verification`
   ADD CONSTRAINT `verified_id_fk` FOREIGN KEY (`id`) REFERENCES `user` (`id`);
-
--- -------------------------------------------------------- 
--- Database User
---
-CREATE USER 'databaseadmin'@'%' IDENTIFIED BY 'databaseadmin' PASSWORD EXPIRE INTERVAL 30 DAY PASSWORD REUSE INTERVAL 365 day;
-ALTER USER 'databaseadmin'@'%'  FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME 3;
-GRANT ALL ON lamp_docker.* TO 'databaseadmin'@'%';
-GRANT CREATE USER ON *.* TO 'databaseadmin'@'%';
-GRANT INSERT, SELECT, UPDATE, DELETE ON lamp_docker.* TO 'databaseadmin'@'%' WITH GRANT OPTION;
-
-
-CREATE USER 'csstaff'@'%'IDENTIFIED BY 'csstaff';
-GRANT UPDATE ON lamp_docker.user TO 'csstaff'@'%';
-GRANT SELECT, UPDATE ON lamp_docker.security_question TO 'csstaff'@'%';
-GRANT SELECT, UPDATE ON lamp_docker.verification TO 'csstaff'@'%';
- 
 COMMIT;

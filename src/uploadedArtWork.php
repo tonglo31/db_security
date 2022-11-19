@@ -1,5 +1,6 @@
 <?php 
     ob_start();
+    include "connectdb.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,6 @@
 </head>
 <body>
     <?php 
-        include "connectdb.php";
         session_start();
         if(isset($_SESSION['userID'])) {
 
@@ -114,7 +114,7 @@
                 </div>
             </section>
             <h1 class="text-center" style="margin-top: 2rem">Exchanged Artwork</h1>
-            <?php 
+            <!-- <?php 
 
                     $query = "SELECT * FROM own_artwork INNER JOIN artwork ON own_artwork.CID = artwork.CID WHERE own_artwork.id=? and exchange = 1";
                     $stmt = mysqli_prepare($conn, $query);
@@ -164,6 +164,6 @@
             ?>
             <?php
         }
-    ?>
+    ?> -->
 </body>
 </html>

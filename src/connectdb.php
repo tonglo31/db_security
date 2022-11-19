@@ -46,12 +46,12 @@
         mysqli_stmt_bind_param($stmt, "ss", $passwordHash, $email);
         mysqli_stmt_execute($stmt);
         $mail = new PHPMailer(true);
-        $mail->Username = "projecttest160561314@gmail.com";
+        $mail->Username = "projecttest482131@gmail.com";
         $mail->SMTPDebug = 0;
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Password = 'projecttest160561314';
+        $mail->Password = 'qumgxwsvvbtrvpvm';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
         $mail->setFrom('noreply@haha.com', 'System Mailer');
@@ -65,12 +65,12 @@
     }
     function sendRegistrationVerifyEmail($email, $name, $verification_code) {
         $mail = new PHPMailer(true);
-        $mail->Username = "projecttest160561314@gmail.com";
+        $mail->Username = "projecttest482131@gmail.com";
         $mail->SMTPDebug = 0;
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Password = 'projecttest160561314';
+        $mail->Password = 'qumgxwsvvbtrvpvm';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
         $mail->setFrom('noreply@haha.com', 'System Mailer');
@@ -99,12 +99,12 @@
             $username = $row['username'];
         }
         $mail = new PHPMailer(true);
-        $mail->Username = "projecttest160561314@gmail.com";
+        $mail->Username = "projecttest482131@gmail.com";
         $mail->SMTPDebug = 0;
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Password = 'projecttest160561314';
+        $mail->Password = 'qumgxwsvvbtrvpvm';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
         $mail->setFrom('noreply@haha.com', 'System Mailer');

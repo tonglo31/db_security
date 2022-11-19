@@ -1,30 +1,49 @@
 version: '3'
 services:
   db:
-    image: percona
+    image: percona:ps-8.0
     container_name: mysql
+    user: root
     networks:
       - lamp-docker
     environment:
       MYSQL_DATABASE: lamp_docker
+      MYSQL_ROOT_PASSWORD: secret
       MYSQL_USER: proj_docker
       MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: secret
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
       TZ: 'Asia/Hong_Kong'
-    command: mysqld --general-log=1 --general-log-file=/var/lib/mysql/general.log --log-timestamps=SYSTEM --slow-query-log=1 --slow-query-log-file=/var/lib/mysql/slow-query.log
+    # command: mysqld --user=root 
     volumes:
       - "./db:/docker-entrypoint-initdb.d/"
+      - "./mysql/config/my.cnf:/etc/my.cnf"
     ports:
       - '3306:3306'
     restart: always
+  elasticsearch:
+    image: elasticsearch:7.14.2
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node  
+  kibana:
+    image: kibana:7.14.2
+    container_name: kibana
+    ports:
+      - "5601:5601"
   grafana:
     image: grafana/grafana
     container_name: grafana
     ports:
       - '3000:3000'
+    networks:
+      - lamp-docker
     environment:
       GF_INSTALL_PLUGINS: percona-percona-app
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
   mysqlexporter:
     container_name: mysql_exporter
     image: prom/mysqld-exporter
@@ -78,6 +97,8 @@ services:
       - PMA_PORT=3306
     depends_on:
       - db
+volumes:
+  elastic_data: {}
 networks:
   lamp-docker:
     driver: bridge
