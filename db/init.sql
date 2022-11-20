@@ -216,7 +216,7 @@ ALTER TABLE `verification`
 -- -------------------------------------------------------- 
 -- Database User
 --
-CREATE USER 'databaseadmin'@'%' IDENTIFIED BY 'databaseadmin' PASSWORD EXPIRE INTERVAL 30 DAY PASSWORD REUSE INTERVAL 365 day;
+CREATE USER 'databaseadmin'@'%' IDENTIFIED BY 'databaseadmin' PASSWORD EXPIRE INTERVAL 30 DAY PASSWORD REUSE INTERVAL 90 day;
 ALTER USER 'databaseadmin'@'%'  FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME 3;
 GRANT ALL ON lamp_docker.* TO 'databaseadmin'@'%';
 GRANT CREATE USER ON *.* TO 'databaseadmin'@'%';
