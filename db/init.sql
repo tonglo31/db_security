@@ -2,7 +2,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+08:00";
 
-INSTALL PLUGIN audit_log SONAME 'audit_log.so';
+-- INSTALL PLUGIN audit_log SONAME 'audit_log.so';
 
 --
 -- Database: `security_project`

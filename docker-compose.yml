@@ -13,10 +13,12 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
       TZ: 'Asia/Hong_Kong'
+    # command: mysqld --plugin-load=audit_log.so --audit_log_format=json --audit_log_file=/var/log/mysql/audit.json
     volumes:
       - "./db:/docker-entrypoint-initdb.d/"
       - "./mysql/config/my.cnf:/etc/my.cnf"
       - ./mysql_log:/var/log/mysql
+      # - ./var/lib/mysql:/var/lib/mysql
     ports:
       - '3306:3306'
     restart: always
@@ -49,16 +51,19 @@ services:
     user: root
     container_name: filebeat
     image: docker.elastic.co/beats/filebeat:7.14.2
-    command: ["-strict.perms=false"]
+    privileged: true
     restart: on-failure
+    command: ["--strict.perms=false"]
     volumes:
       # - filebeat:/usr/share/filebeat
-      - /var/run/docker.sock:/host_docker/docker.sock
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      # - /var/run/docker.sock:/host_docker/docker.sock
       - /var/lib/docker:/host_docker/var/lib/docker
       # - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
       - ./mysql_log:/var/log/mysql
       - "./filebeat_conf/filebeat.yml:/usr/share/filebeat/filebeat.yml"
-      - "./filebeat_conf/mysql.yml:/usr/share/filebeat/modules.d/mysql.yml"
+      # - ./var/lib/mysql/audit.log:/var/log/mysql/audit.log
+      # - "./filebeat_conf/mysql.yml:/usr/share/filebeat/modules.d/mysql.yml"
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
       - KIBANA_HOST=${KIBANA_HOST:-node1}
@@ -83,6 +88,7 @@ services:
       GF_INSTALL_PLUGINS: percona-percona-app
     volumes:
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana_dashboard:/etc/grafana/provisioning/dashboards/
   mysqlexporter:
     container_name: mysql_exporter
     image: prom/mysqld-exporter
@@ -142,5 +148,5 @@ networks:
 # configs:
 #   fb_config:
 #     file: ./filebeat_conf/filebeat.yml
-# volumes:
-#   filebeat:
+volumes:
+  my-datavolume:
