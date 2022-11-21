@@ -1,5 +1,7 @@
 <?php 
     ob_start();
+    ob_end_flush();
+    include "connectdb.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +29,6 @@
         });
     </script>
         <?php 
-            include "connectdb.php";
             session_start();
             $id = $_SESSION['userID'];
             $code = getVerifyCode($id);

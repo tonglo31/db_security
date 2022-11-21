@@ -13,7 +13,7 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
       TZ: 'Asia/Hong_Kong'
-    # command: mysqld --plugin-load=audit_log.so --audit_log_format=json --audit_log_file=/var/log/mysql/audit.json
+    command: mysqld --plugin-load=audit_log.so --audit_log_format=json --audit_log_file=/var/log/mysql/audit.json
     volumes:
       - "./db:/docker-entrypoint-initdb.d/"
       - "./mysql/config/my.cnf:/etc/my.cnf"
@@ -117,8 +117,8 @@ services:
     networks:
       - lamp-docker
   php_apache:
-    build: . 
-    image: php:8.1.12-apache
+    image: php:7.4.33-apache
+    build: ./php_dockerdirectory
     container_name: php
     networks:
       - lamp-docker

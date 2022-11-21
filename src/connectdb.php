@@ -228,6 +228,7 @@
             $username = $row['username'];
             $enabled_verified = $row['enabled_verified'];
         }
+        $host  = $_SERVER['HTTP_HOST'];
         if ($isRegistered == 1) {
             $_SESSION['username'] = $username;
             $_SESSION['userID'] = $id;
@@ -235,10 +236,10 @@
                 header('Location: index.php');
             } else if($enabled_verified == 1){
                 setcookie("verify_type", 1);
-                header('Location: verifyTwofactor.php');
+                header("Location: http://$host/verifyTwofactor.php");
             } else if($enabled_verified == 2){
                 setcookie("verify_type", 2);
-                header("Location: verifyTwofactor.php");
+                header("Location: http://$host/verifyTwofactor.php");
             } 
         } else {
             setcookie("userID", $id);

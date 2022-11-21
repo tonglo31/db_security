@@ -223,7 +223,7 @@ GRANT CREATE USER ON *.* TO 'databaseadmin'@'%';
 GRANT INSERT, SELECT, UPDATE, DELETE ON lamp_docker.* TO 'databaseadmin'@'%' WITH GRANT OPTION;
 
 
-CREATE USER 'csstaff'@'%'IDENTIFIED BY 'csstaff' PASSWORD EXPIRE INTERVAL 60 DAY PASSWORD REUSE INTERVAL 90 day;
+CREATE USER 'csstaff'@'%'IDENTIFIED BY 'csstaff';
 GRANT UPDATE ON lamp_docker.user TO 'csstaff'@'%';
 GRANT SELECT, UPDATE ON lamp_docker.security_question TO 'csstaff'@'%';
 GRANT SELECT, UPDATE ON lamp_docker.verification TO 'csstaff'@'%';
