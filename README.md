@@ -20,7 +20,7 @@ Clone the git repository
 ## Setup Docker Container
 
 ```bash
-cd db/securty
+cd db_securty
 docker-compose up --build
 ```
 The LAMP stack, monitoring tools and dashboard should now setup successfully.
