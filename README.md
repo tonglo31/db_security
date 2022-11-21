@@ -40,9 +40,9 @@ localhost:5601 -> Search saved object -> import ndjson file
 ```
 
 ![Screenshot 1](./Overview/Prometheus.png)
-![Screenshot 2](./Grafana.png)
-![Screenshot 3](./Kibana1.png)
-![Screenshot 4](./Kibana2.png)
+![Screenshot 2](./Overview/Grafana.png)
+![Screenshot 3](./Overview/Kibana1.png)
+![Screenshot 4](./Overview/Kibana2.png)
 
 ## Setup filebeat
 If want to make audit.log as JSON format
